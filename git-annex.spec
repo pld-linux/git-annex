@@ -1,17 +1,12 @@
 Summary:	Manage files with git, without checking in their contents
 Name:		git-annex
-Version:	0.11
+Version:	0.21
 Release:	0.1
 License:	GPL v3
 Group:		Applications/Archiving
-# Made from git
-#   git clone git://git.kitenet.net/git-annex
-#   cd git-annex
-#   git archive --format=tar --prefix=git-annex-0.11/ 0.11 | bzip2 --best > ../git-annex-0.11.tar.bz2
 URL:		http://git-annex.branchable.com/
-Source0:	%{name}-%{version}.tar.bz2
-Patch1:		prefix-support.patch
-Patch0:		install-docs.patch
+Source0:	http://git.kitenet.net/?p=git-annex;a=snapshot;h=ddd305aa10b2ee63c493aee05ab30d06b9424139;sf=tgz#/%{name}-%{version}.tar.gz
+# Source0-md5:	87dbc8e98afbc298d5f9cd35d9079b5b
 BuildRequires:	ikiwiki
 # Build-time check for uuid
 BuildRequires:	ghc-MissingH-devel
@@ -50,9 +45,8 @@ make git-annex there aware of the annexed file, and it can be used to
 retrieve its content from the key-value store.
 
 %prep
-%setup -q
-%patch0 -p1
-%patch1 -p1
+%setup -qc
+mv %{name}-*/* .
 
 %build
 %{__make}
