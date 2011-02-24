@@ -1,21 +1,19 @@
 Summary:	Manage files with git, without checking in their contents
 Name:		git-annex
 Version:	0.21
-Release:	0.1
+Release:	1
 License:	GPL v3
 Group:		Applications/Archiving
 URL:		http://git-annex.branchable.com/
 Source0:	http://git.kitenet.net/?p=git-annex;a=snapshot;h=ddd305aa10b2ee63c493aee05ab30d06b9424139;sf=tgz#/%{name}-%{version}.tar.gz
 # Source0-md5:	87dbc8e98afbc298d5f9cd35d9079b5b
-BuildRequires:	ikiwiki
+BuildRequires:	ghc
+BuildRequires:	ghc-MissingH
+BuildRequires:	ghc-pcre-light
+BuildRequires:	ghc-utf8-string
+#BuildRequires:	ikiwiki
 # Build-time check for uuid
-BuildRequires:	ghc-MissingH-devel
-BuildRequires:	ghc-MissingH-prof
-BuildRequires:	ghc-pcre-light-devel
-BuildRequires:	ghc-pcre-light-prof
-BuildRequires:	ghc-utf8-string-devel
-BuildRequires:	ghc-utf8-string-prof
-BuildRequires:	uuid
+#BuildRequires:	uuid
 Requires:	findutils
 Requires:	git-core
 Requires:	rsync
@@ -50,12 +48,11 @@ mv %{name}-*/* .
 
 %build
 %{__make}
-%{__make} docs
+#%{__make} docs
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__make} install install-docs \
-	PREFIX=%{_prefix} \
+%{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
@@ -64,5 +61,6 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/%{name}
-%{_docdir}/%{name}/
+%attr(755,root,root) %{_bindir}/%{name}-shell
 %{_mandir}/man1/%{name}.1*
+%{_mandir}/man1/%{name}-shell.1*
