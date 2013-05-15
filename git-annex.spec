@@ -1,11 +1,11 @@
 Summary:	Manage files with git, without checking in their contents
 Name:		git-annex
-Version:	0.21
+Version:	4.20130501.1
 Release:	1
 License:	GPL v3
 Group:		Applications/Archiving
 URL:		http://git-annex.branchable.com/
-Source0:	http://git.kitenet.net/?p=git-annex;a=snapshot;h=ddd305aa10b2ee63c493aee05ab30d06b9424139;sf=tgz#/%{name}-%{version}.tar.gz
+Source0:	http://hackage.haskell.org/packages/archive/%{name}/%{version}/%{name}-${version}.tar.gz
 # Source0-md5:	87dbc8e98afbc298d5f9cd35d9079b5b
 BuildRequires:	ghc
 BuildRequires:	ghc-MissingH
