@@ -1,23 +1,24 @@
 Summary:	Manage files with git, without checking in their contents
 Name:		git-annex
 Version:	4.20130501.1
-Release:	1
+Release:	0.1
 License:	GPL v3
 Group:		Applications/Archiving
 URL:		http://git-annex.branchable.com/
-Source0:	http://hackage.haskell.org/packages/archive/%{name}/%{version}/%{name}-${version}.tar.gz
-# Source0-md5:	87dbc8e98afbc298d5f9cd35d9079b5b
+Source0:	http://hackage.haskell.org/packages/archive/%{name}/%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	59026597f8ef9575998cbab0fafe8416
 BuildRequires:	ghc
 BuildRequires:	ghc-MissingH
-BuildRequires:	ghc-pcre-light
+#BuildRequires:	ghc-pcre-light
 BuildRequires:	ghc-utf8-string
+BuildRequires:	ghc-dataenc
 #BuildRequires:	ikiwiki
 # Build-time check for uuid
 #BuildRequires:	uuid
-Requires:	findutils
-Requires:	git-core
-Requires:	rsync
-Requires:	uuid
+#Requires:	findutils
+#Requires:	git-core
+#Requires:	rsync
+Requires:	libuuid
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -43,8 +44,9 @@ make git-annex there aware of the annexed file, and it can be used to
 retrieve its content from the key-value store.
 
 %prep
-%setup -qc
-mv %{name}-*/* .
+%setup -q
+#%setup -qc
+#mv %{name}-*/* .
 
 %build
 %{__make}
