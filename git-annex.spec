@@ -5,20 +5,30 @@ Release:	0.1
 License:	GPL v3
 Group:		Applications/Archiving
 URL:		http://git-annex.branchable.com/
-Source0:	http://hackage.haskell.org/packages/archive/%{name}/%{version}/%{name}-%{version}.tar.gz
+Source0:	http://hackage.haskell.org/packages/archive/git-annex/%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	59026597f8ef9575998cbab0fafe8416
-BuildRequires:	ghc
+BuildRequires:	ghc >= 7.4
+BuildRequires:	ghc-IfElse
+BuildRequires:	ghc-extensible-exceptions
 BuildRequires:	ghc-MissingH
+BuildRequires:	ghc-QuickCheck
+BuildRequires:	ghc-dataenc
+BuildRequires:	ghc-monad-control
 #BuildRequires:	ghc-pcre-light
 BuildRequires:	ghc-utf8-string
-BuildRequires:	ghc-dataenc
-#BuildRequires:	ikiwiki
-# Build-time check for uuid
-#BuildRequires:	uuid
-#Requires:	findutils
-#Requires:	git-core
-#Requires:	rsync
+BuildRequires:	libuuid
+Requires:	findutils
+Requires:	findutils
+Requires:	git-core
+Requires:	git-core
 Requires:	libuuid
+Requires:	rsync
+Requires:	rsync
+Suggests:	curl
+Suggests:	gnu-gpg
+Suggests:	lsof
+Suggests:	nss-mdns
+Suggests:	sha1sum
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
