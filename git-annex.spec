@@ -47,6 +47,7 @@ retrieve its content from the key-value store.
 mkdir -p opt/git-annex
 mkdir -p usr/bin
 mv git-annex.linux/* opt/git-annex
+
 cp opt/git-annex/git-annex usr/bin/
 cp opt/git-annex/git-annex-webapp usr/bin/
 cp opt/git-annex/runshell usr/bin/
@@ -76,6 +77,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir /opt/git-annex/glibc-libs
 %dir /opt/git-annex/libdirs
 %dir /opt/git-annex/usr
+%dir /opt/git-annex/templates
 %dir /opt/git-annex/usr/lib
 %ifarch %{x8664}
 %dir /opt/git-annex/usr/lib/x86_64-linux-gnu
