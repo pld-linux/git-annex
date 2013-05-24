@@ -1,34 +1,16 @@
+%define     _enable_debug_packages  0
 Summary:	Manage files with git, without checking in their contents
-Name:		git-annex
-Version:	4.20130501.1
+Name:		git-annex-standalone
+Version:	4.20130521.1
 Release:	0.1
 License:	GPL v3
 Group:		Applications/Archiving
 URL:		http://git-annex.branchable.com/
-Source0:	http://hackage.haskell.org/packages/archive/git-annex/%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	59026597f8ef9575998cbab0fafe8416
-BuildRequires:	ghc >= 7.4
-BuildRequires:	ghc-IfElse
-BuildRequires:	ghc-extensible-exceptions
-BuildRequires:	ghc-MissingH
-BuildRequires:	ghc-QuickCheck
-BuildRequires:	ghc-dataenc
-BuildRequires:	ghc-monad-control
-#BuildRequires:	ghc-pcre-light
-BuildRequires:	ghc-utf8-string
-BuildRequires:	libuuid
-Requires:	findutils
-Requires:	findutils
-Requires:	git-core
-Requires:	git-core
-Requires:	libuuid
-Requires:	rsync
-Requires:	rsync
-Suggests:	curl
-Suggests:	gnu-gpg
-Suggests:	lsof
-Suggests:	nss-mdns
-Suggests:	sha1sum
+Source0:	http://downloads.kitenet.net/git-annex/linux/current/%{name}-amd64.tar.gz
+# Source0-md5:	dfceaa0d56d13815ba15bb50a711d1bb
+Source1:	http://downloads.kitenet.net/git-annex/linux/current/%{name}-i386.tar.gz
+# Source1-md5:	12bbe08f32b7d499849b600575959954
+Conflicts:	git-annex
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -54,25 +36,62 @@ make git-annex there aware of the annexed file, and it can be used to
 retrieve its content from the key-value store.
 
 %prep
-%setup -q
-#%setup -qc
-#mv %{name}-*/* .
+%ifarch %{x8664}
+%setup -qc -a0
+%endif
+%ifarch %{ix86}
+%setup -qc -a1
+%endif
 
 %build
-%{__make}
-#%{__make} docs
+mkdir -p opt/git-annex
+mkdir -p usr/bin
+mv git-annex.linux/* opt/git-annex
+cp opt/git-annex/git-annex usr/bin/
+cp opt/git-annex/git-annex-webapp usr/bin/
+cp opt/git-annex/runshell usr/bin/
+%{__sed} -i 's:^base=.*:base=/opt/git-annex:' usr/bin/git-annex
+%{__sed} -i 's:^base=.*:base=/opt/git-annex:' usr/bin/git-annex-webapp
+%{__sed} -i 's:^base=.*:base=/opt/git-annex:' usr/bin/runshell
 
 %install
 rm -rf $RPM_BUILD_ROOT
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+
+install -d $RPM_BUILD_ROOT/opt/git-annex
+install -d $RPM_BUILD_ROOT/usr/bin
+cp -a opt/git-annex/* $RPM_BUILD_ROOT/opt/git-annex
+cp -a usr/bin/* $RPM_BUILD_ROOT/usr/bin
+#install $RPM_BUILD_ROOT/opt/git-annex/git-annex
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/%{name}
-%attr(755,root,root) %{_bindir}/%{name}-shell
-%{_mandir}/man1/%{name}.1*
-%{_mandir}/man1/%{name}-shell.1*
+%dir /opt/git-annex
+%dir /opt/git-annex/bin
+%dir /opt/git-annex/git-core
+%dir /opt/git-annex/git-core/mergetools
+%dir /opt/git-annex/lib
+%dir /opt/git-annex/glibc-libs
+%dir /opt/git-annex/libdirs
+%dir /opt/git-annex/usr
+%dir /opt/git-annex/usr/lib
+%ifarch %{x8664}
+%dir /opt/git-annex/usr/lib/x86_64-linux-gnu
+%dir /opt/git-annex/lib/x86_64-linux-gnu
+%endif
+%attr(755,root,root) /opt/git-annex/git-annex
+%attr(755,root,root) /opt/git-annex/git-annex-webapp
+%attr(755,root,root) /opt/git-annex/runshell
+%attr(755,root,root) /opt/git-annex/bin/*
+%attr(755,root,root) /opt/git-annex/git-core/git*
+%attr(755,root,root) /opt/git-annex/git-core/mergetools/*
+%attr(755,root,root) /opt/git-annex/usr/lib/*so*
+%attr(755,root,root) /opt/git-annex/usr/lib/x86_64-linux-gnu/*
+%attr(755,root,root) /opt/git-annex/lib/x86_64-linux-gnu/*
+%attr(755,root,root) /usr/bin/git-annex
+%attr(755,root,root) /usr/bin/git-annex-webapp
+%attr(755,root,root) /usr/bin/runshell
+#%{_mandir}/man1/%{name}.1*
+#%{_mandir}/man1/%{name}-shell.1*
