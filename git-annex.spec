@@ -4,15 +4,15 @@ Version:	4.20130501.1
 Release:	0.1
 License:	GPL v3
 Group:		Applications/Archiving
-URL:		http://git-annex.branchable.com/
 Source0:	http://hackage.haskell.org/packages/archive/git-annex/%{version}/%{name}-%{version}.tar.gz
 # Source0-md5:	59026597f8ef9575998cbab0fafe8416
+URL:		http://git-annex.branchable.com/
 BuildRequires:	ghc >= 7.4
 BuildRequires:	ghc-IfElse
-BuildRequires:	ghc-extensible-exceptions
 BuildRequires:	ghc-MissingH
 BuildRequires:	ghc-QuickCheck
 BuildRequires:	ghc-dataenc
+BuildRequires:	ghc-extensible-exceptions
 BuildRequires:	ghc-monad-control
 #BuildRequires:	ghc-pcre-light
 BuildRequires:	ghc-utf8-string
