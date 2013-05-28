@@ -9,6 +9,7 @@ URL:		http://git-annex.branchable.com/
 Source0:	http://downloads.kitenet.net/git-annex/linux/current/%{name}-amd64.tar.gz
 # Source0-md5:	dfceaa0d56d13815ba15bb50a711d1bb
 Source1:	http://downloads.kitenet.net/git-annex/linux/current/%{name}-i386.tar.gz
+Source2:	git-annex-shell
 # Source1-md5:	12bbe08f32b7d499849b600575959954
 Conflicts:	git-annex
 ExclusiveArch:	%{ix86} %{x8664}
@@ -49,12 +50,12 @@ mkdir -p opt/git-annex
 mkdir -p usr/bin
 mv git-annex.linux/* opt/git-annex
 
+%{__sed} -i 's:^base=.*:base=/opt/git-annex:' opt/git-annex/git-annex
+%{__sed} -i 's:^base=.*:base=/opt/git-annex:' opt/git-annex/git-annex-webapp
+%{__sed} -i 's:^base=.*:base=/opt/git-annex:' opt/git-annex/runshell
+
 cp opt/git-annex/git-annex usr/bin/
 cp opt/git-annex/git-annex-webapp usr/bin/
-cp opt/git-annex/runshell usr/bin/git-annex-shell
-%{__sed} -i 's:^base=.*:base=/opt/git-annex:' usr/bin/git-annex
-%{__sed} -i 's:^base=.*:base=/opt/git-annex:' usr/bin/git-annex-webapp
-%{__sed} -i 's:^base=.*:base=/opt/git-annex:' usr/bin/git-annex-shell
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -63,7 +64,7 @@ install -d $RPM_BUILD_ROOT/opt/git-annex
 install -d $RPM_BUILD_ROOT/usr/bin
 cp -a opt/git-annex/* $RPM_BUILD_ROOT/opt/git-annex
 cp -a usr/bin/* $RPM_BUILD_ROOT/usr/bin
-#install $RPM_BUILD_ROOT/opt/git-annex/git-annex
+install %{SOURCE2} $RPM_BUILD_ROOT/usr/bin/git-annex-shell
 
 %clean
 rm -rf $RPM_BUILD_ROOT
