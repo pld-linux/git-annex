@@ -11,6 +11,7 @@ Source0:	http://downloads.kitenet.net/git-annex/linux/current/%{name}-amd64.tar.
 Source1:	http://downloads.kitenet.net/git-annex/linux/current/%{name}-i386.tar.gz
 # Source1-md5:	12bbe08f32b7d499849b600575959954
 Conflicts:	git-annex
+ExclusiveArch:	%{ix86} %{x8664}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -37,10 +38,10 @@ retrieve its content from the key-value store.
 
 %prep
 %ifarch %{x8664}
-%setup -qc -a0
+%setup -qc
 %endif
 %ifarch %{ix86}
-%setup -qc -a1
+%setup -qc -T -a1
 %endif
 
 %build
@@ -82,6 +83,14 @@ rm -rf $RPM_BUILD_ROOT
 %ifarch %{x8664}
 %dir /opt/git-annex/usr/lib/x86_64-linux-gnu
 %dir /opt/git-annex/lib/x86_64-linux-gnu
+%attr(755,root,root) /opt/git-annex/usr/lib/x86_64-linux-gnu/*
+%attr(755,root,root) /opt/git-annex/lib/x86_64-linux-gnu/*
+%endif
+%ifarch %{ix86}
+%dir /opt/git-annex/usr/lib/i386-linux-gnu
+%dir /opt/git-annex/lib/i386-linux-gnu
+%attr(755,root,root) /opt/git-annex/usr/lib/i386-linux-gnu/*
+%attr(755,root,root) /opt/git-annex/lib/i386-linux-gnu/*
 %endif
 %attr(755,root,root) /opt/git-annex/git-annex
 %attr(755,root,root) /opt/git-annex/git-annex-webapp
@@ -90,8 +99,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /opt/git-annex/git-core/git*
 %attr(755,root,root) /opt/git-annex/git-core/mergetools/*
 %attr(755,root,root) /opt/git-annex/usr/lib/*so*
-%attr(755,root,root) /opt/git-annex/usr/lib/x86_64-linux-gnu/*
-%attr(755,root,root) /opt/git-annex/lib/x86_64-linux-gnu/*
 %attr(755,root,root) /usr/bin/git-annex
 %attr(755,root,root) /usr/bin/git-annex-webapp
 %attr(755,root,root) /usr/bin/runshell
