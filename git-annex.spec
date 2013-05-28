@@ -2,7 +2,7 @@
 Summary:	Manage files with git, without checking in their contents
 Name:		git-annex-standalone
 Version:	4.20130521.1
-Release:	0.1
+Release:	0.2
 License:	GPL v3
 Group:		Applications/Archiving
 URL:		http://git-annex.branchable.com/
@@ -51,10 +51,10 @@ mv git-annex.linux/* opt/git-annex
 
 cp opt/git-annex/git-annex usr/bin/
 cp opt/git-annex/git-annex-webapp usr/bin/
-cp opt/git-annex/runshell usr/bin/
+cp opt/git-annex/runshell usr/bin/git-annex-shell
 %{__sed} -i 's:^base=.*:base=/opt/git-annex:' usr/bin/git-annex
 %{__sed} -i 's:^base=.*:base=/opt/git-annex:' usr/bin/git-annex-webapp
-%{__sed} -i 's:^base=.*:base=/opt/git-annex:' usr/bin/runshell
+%{__sed} -i 's:^base=.*:base=/opt/git-annex:' usr/bin/git-annex-shell
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -101,6 +101,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) /opt/git-annex/usr/lib/*so*
 %attr(755,root,root) /usr/bin/git-annex
 %attr(755,root,root) /usr/bin/git-annex-webapp
-%attr(755,root,root) /usr/bin/runshell
+%attr(755,root,root) /usr/bin/git-annex-shell
 #%{_mandir}/man1/%{name}.1*
 #%{_mandir}/man1/%{name}-shell.1*
